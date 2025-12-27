@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Aryan</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  background: linear-gradient(135deg, #0b1c3d, #4b0f3b);
+  color: #fff;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* Buttons */
+.buttons {
+  margin: 40px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+button {
+  padding: 14px 24px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Circle buttons */
+.circle-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+.circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+.green { background: #3cff8f; }
+.red { background: #ff4b4b; }
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  font-size: 24px;
+  animation: fall 3s linear forwards;
+}
+@keyframes fall {
+  from { transform: translateY(-50px); opacity: 1; }
+  to { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Thought bubble */
+#thought-bubble {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: pink;
+  color: black;
+  padding: 10px 16px;
+  border-radius: 20px;
+  opacity: 0;
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Jumpscare */
+#jumpscare {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 9999;
+}
+#jumpscare img {
+  position: absolute;
+  width: 180px;
+}
+
+/* Shake */
+.shake {
+  animation: shake 0.3s;
+}
+@keyframes shake {
+  0% { transform: translate(0); }
+  25% { transform: translate(5px,-5px); }
+  50% { transform: translate(-5px,5px); }
+  75% { transform: translate(5px,5px); }
+  100% { transform: translate(0); }
+}
+
+/* Flash */
+.flash {
+  animation: flash 0.2s;
+}
+@keyframes flash {
+  from { background: white; }
+  to { background: transparent; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>HAPPY BIRTHDAY ARYAN 🎉💐</h1>
+
+<div class="buttons">
+  <button onclick="spawnConfetti()">Click me 😋</button>
+</div>
+
+<div class="circle-buttons">
+  <div class="circle green"></div>
+  <div class="circle red"></div>
+</div>
+
+<p>Green &nbsp;&nbsp; Red</p>
+
+<div id="thought-bubble">you better be smiling rn</div>
+<div id="jumpscare"></div>
+
+<script>
+// Confetti
+function spawnConfetti() {
+  for (let i = 0; i < 10; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.innerText = '🎊';
+    c.style.left = Math.random() * window.innerWidth + 'px';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+}
+
+// Thought bubble timing
+setTimeout(() => {
+  const bubble = document.getElementById('thought-bubble');
+  bubble.style.opacity = 1;
+  setTimeout(() => bubble.style.opacity = 0, 4000);
+}, 5000);
+
+// Scroll jumpscare
+let triggered = false;
+window.addEventListener('scroll', () => {
+  if (triggered) return;
+  if (window.scrollY > 150) {
+    triggered = true;
+
+    document.body.classList.add('flash','shake');
+    const js = document.getElementById('jumpscare');
+
+    for (let i = 0; i < 12; i++) {
+      const img = document.createElement('img');
+      img.src = "https://i.imgur.com/REPLACE_WITH_YOUR_IMAGE.jpg"; // 👈 PUT IMAGE LINK HERE
+      img.style.top = Math.random()*100 + "%";
+      img.style.left = Math.random()*100 + "%";
+      img.style.transform = `rotate(${Math.random()*360}deg)`;
+      js.appendChild(img);
+    }
+
+    js.style.display = 'block';
+
+    setTimeout(() => {
+      js.style.display = 'none';
+      js.innerHTML = '';
+      document.body.classList.remove('flash','shake');
+      alert("ok sorry that was unnecessarily funny 😭");
+    }, 5000); // 👈 5 SECONDS
+  }
+});
+</script>
+
+</body>
+</html>
